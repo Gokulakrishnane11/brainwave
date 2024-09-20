@@ -24,12 +24,12 @@ const PricingList = () => {
           {({ inView, ref }) => (
             <motion.div
               ref={ref} // Attach ref to the pricing card
-              className="w-[19rem] max-lg:w-full h-full px-6 bg-n-8 border border-n-6 rounded-[2rem] lg:w-auto even:py-14 odd:py-8 odd:my-4 transition transform hover:scale-105 hover:shadow-xl duration-[400ms] ease-in-out"
+              className="w-[19rem] max-lg:w-full h-full px-6 bg-n-8 border border-n-6 rounded-[2rem] lg:w-auto even:py-14 odd:py-8 odd:my-4 transition transform hover:scale-105 hover:shadow-xl duration-[400ms] ease-in-out [&>h4]:first:text-color-2 [&>h4]:even:text-color-1 [&>h4]:last:text-color-3"
               variants={cardVariants} // Apply card animation
               initial="hidden"
               animate={inView ? "visible" : "hidden"} // Trigger animation based on scroll position
             >
-              <h4 className="h4 m-4">{item.title}</h4>
+              <h4 className="h4 m-4 ">{item.title}</h4>
               <p className="body-2 min-h-[4rem] mb-3 text-n-1/50">{item.description}</p>
 
               <div className="flex items-center h-[5.5rem] mb-6">
