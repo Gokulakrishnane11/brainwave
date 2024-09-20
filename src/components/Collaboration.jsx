@@ -76,13 +76,13 @@ const Collaboration = () => {
                 {collabText}
               </p>
               
-              <div className="relative mx-auto w-[22rem] aspect-square scale-100 transition-transform duration-500 md:hover:scale-105">
+              <div className="relative mx-auto w-[22rem] aspect-square scale-100 transition-transform duration-500 md:hover:scale-105" id='rotating-circle'>
                 <motion.div 
                   className="relative w-full h-full"
                   style={{ rotate: rotation }}
                 >
                   <div className="flex w-full h-full border border-n-6 rounded-full">
-                    <div className="flex w-60 aspect-square m-auto border border-n-6 rounded-full">
+                    <div className="flex w-60 aspect-square m-auto border border-n-6 rounded-full" id='rotating-circle-2'>
                       <div className="w-[6rem] aspect-square m-auto p-[0.2rem] bg-conic-gradient rounded-full">
                         <div className="flex items-center justify-center w-full h-full bg-n-8 rounded-full">
                           <img
@@ -108,12 +108,14 @@ const Collaboration = () => {
                       >
                         <motion.div 
                           className={`relative -top-[1.6rem] flex w-[3.2rem] h-[3.2rem] bg-n-7 border border-n-1/15 rounded-xl items-center justify-center transition-all duration-300 ${
-                            hoveredApp === app.id ? 'scale-110 md:scale-125 border-color-1' : ''
+                            hoveredApp === app.id ? 'scale-110 md:scale-125 border-color-5' : ''
                           }`}
                           style={{ rotate: -(index * 45 + rotation) }}
+                          id='app-icon-background'
                         >
                           <img
                             className="transition-transform duration-300"
+                            id='app-icon'
                             width={app.width}
                             height={app.height}
                             src={app.icon}

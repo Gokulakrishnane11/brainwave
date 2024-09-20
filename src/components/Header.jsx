@@ -1,77 +1,148 @@
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useLocation } from "react-router-dom";
+import { disablePageScroll, enablePageScroll } from "scroll-lock";
 import { brainwave } from "../assets/";
 import { navigation } from "../constants";
-import { useLocation } from "react-router-dom";
 import Button from "./Button";
-import MenuSvg from '../assets/svg/MenuSvg'
+import MenuSvg from '../assets/svg/MenuSvg';
 import { HambugerMenu } from "./design/Header";
-import { useState } from "react";
-import { disablePageScroll,enablePageScroll } from "scroll-lock"; // enable page scroll and disable page scroll
+
 const Header = () => {
   const pathname = useLocation();
-  const [openNavigation, setOpenNavigation] = useState(false)
+  const [openNavigation, setOpenNavigation] = useState(false);
 
-  const toggleNavigation =()=>{
-    if(openNavigation){
-        setOpenNavigation(false);
-        enablePageScroll();//enable page scroll
-    } else{
-        setOpenNavigation(true);
-        disablePageScroll();//disable page scroll
+  const toggleNavigation = () => {
+    if (openNavigation) {
+      setOpenNavigation(false);
+      enablePageScroll();
+    } else {
+      setOpenNavigation(true);
+      disablePageScroll();
     }
-  }  
-//   this function clicks on the menu links and closed the menu
-  const handleClick = ()=>{
-    if(!openNavigation) return;
+  };
 
+  const handleClick = () => {
+    if (!openNavigation) return;
     enablePageScroll();
     setOpenNavigation(false);
   };
 
+  const menuVariants = {
+    closed: {
+      opacity: 0,
+      y: "-100%",
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut"
+      }
+    },
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   return (
-    <div className={`fixed top-0 left-0 w-full z-50 border-b border-n-6 lg:bg-n-8/90 lg:backdrop-blur-sm ${openNavigation ? 'bg-n-8/90' :' bg-n-8/90 backdrop-blur-sm'}`}>
-      <div className="flex items-center px-5 lg:px-7.5 xl:px-10 max-lg:py-4">
-        <a className="block w-[12rem] xl:mr-8" href="#hero">
+    <motion.header
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`fixed top-0 left-0 w-full z-50 border-b border-n-6 lg:bg-n-8/90 lg:backdrop-blur-sm ${
+        openNavigation ? 'bg-n-8' : 'bg-n-8/90 backdrop-blur-sm'
+      }`}
+    >
+      <div className="flex items-center justify-between px-5 lg:px-7.5 xl:px-10 max-lg:py-4">
+        <motion.a
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="block w-[12rem] xl:mr-8"
+          href="#hero"
+        >
           <img src={brainwave} alt="Brainwave" width={190} height={40} />
-        </a>
- 
-        <nav className={`${openNavigation ? 'flex' : 'hidden'} fixed top-[5rem] left-0 right-0 bottom-0 bg-n-8 lg:static lg:flex lg:mx-auto lg:bg-transparent`}>
-          <div className="relative z-2 flex flex-col items-center justify-center m-auto lg:flex-row">
+        </motion.a>
+
+        <nav className={`${
+          openNavigation ? 'flex' : 'hidden'
+        } lg:flex lg:items-center lg:justify-between lg:ml-auto`}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, staggerChildren: 0.1 }}
+            className="flex flex-col items-center justify-center lg:flex-row"
+          >
             {navigation.map((item) => (
-              <a
+              <motion.a
                 key={item.id}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 href={item.url}
                 onClick={handleClick}
                 className={`block relative font-code text-2xl uppercase text-n-1 transition-colors hover:text-color-1 ${
                   item.onlyMobile ? "lg:hidden" : ""
-                } px-6 py-6 md:py-8 lg:-mr-0.25 lg:text-xs lg:font-semibold ${
+                } px-6 py-6 lg:py-8 lg:text-xs lg:font-semibold ${
                   item.url === pathname.hash
-                    ? "z-2  lg:text-n-1"
+                    ? "z-2 lg:text-n-1"
                     : "lg:text-n-1/50"
-                } lg:leading-5 lg:hover:text-n-1 xl:px-12 `}
+                } lg:leading-5 lg:hover:text-n-1 xl:px-8`}
               >
                 {item.title}
-              </a>
+              </motion.a>
             ))}
-          </div>
-          <HambugerMenu/>
+          </motion.div>
         </nav>
 
-        <a
-          href="#signup"
-          className="button hidden mr-8 text-n-1/50 transition-color hover:text-n-1 lg:block"
-        >
-          New account
-        </a>
+        <div className="flex items-center ml-auto lg:ml-0">
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            href="#signup"
+            className="button hidden mr-8 text-n-1/50 transition-color hover:text-n-1 lg:block"
+          >
+            New account
+          </motion.a>
 
-        <Button className="hidden lg:flex items-center" href="#login">
-          Sign in
-        </Button>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="hidden lg:block"
+          >
+            <Button className="items-center" href="#login">
+              Sign in
+            </Button>
+          </motion.div>
 
-        <Button className='ml-auto lg:hidden items-center' px='px-3' onClick={toggleNavigation}>
-            <MenuSvg openNavigation={openNavigation}/>
-        </Button>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="lg:hidden ml-4"
+          >
+            <Button className='items-center' px='px-3' onClick={toggleNavigation}>
+              <MenuSvg openNavigation={openNavigation} />
+            </Button>
+          </motion.div>
+        </div>
+
+        {/* Animated HamburgerMenu */}
+        <AnimatePresence>
+          {openNavigation && (
+            <motion.div 
+              className="lg:hidden absolute top-full left-0 right-0"
+              initial="closed"
+              animate="open"
+              exit="closed"
+              variants={menuVariants}
+            >
+              <HambugerMenu />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </div>
+    </motion.header>
   );
 };
 

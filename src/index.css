@@ -133,3 +133,21 @@ body{
 }
 
 
+/* cooperation size  */
+
+@media (max-width: 425px) {
+ #rotating-circle{
+    width:90%;
+    padding: 5%;
+ }
+ #rotating-circle-2{
+   width:70%;
+   padding: 5%;
+ }
+ #app-icon{
+  width: 23px;
+ }
+ #app-icon-background{
+  width: 2.6rem;
+ }
+}
